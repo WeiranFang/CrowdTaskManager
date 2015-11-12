@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">CrowdTaskManager</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_logout">Logout</string>
+    <string name="action_logout">Logout</string>
+    <string name="locationHint">Enter your task location</string>
+
+    <string-array name="category_array">
+        <item>select</item>
+        <item>Data</item>
+        <item>Design</item>
+        <item>Education</item>
+        <item>Idea</item>
+        <item>Labor</item>
+        <item>Language</item>
+        <item>Technical</item>
+    </string-array>
+
+    <string-array name="duration_array">
+        <item>select</item>
+        <item>less than 1 day</item>
+        <item>less than 1 week</item>
+        <item>less than 1 month</item>
+        <item>more than 1 month</item>
+        <item>more than 6 months</item>
+        <item>more than 1 year</item>
+    </string-array>
+</resources>
