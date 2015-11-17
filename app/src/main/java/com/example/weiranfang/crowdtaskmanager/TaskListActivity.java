@@ -20,6 +20,8 @@ public class TaskListActivity extends AppCompatActivity {
 
     UserLocalStore userLocalStore;
 
+    TaskListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,10 +61,11 @@ public class TaskListActivity extends AppCompatActivity {
             }
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,android.R.id.text1, titles);
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_list_item_1,android.R.id.text1, titles);
 
-        taskListView.setAdapter(arrayAdapter);
+        adapter = new TaskListAdapter(this, fetchedJsonArray);
+        taskListView.setAdapter(adapter);
 
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
