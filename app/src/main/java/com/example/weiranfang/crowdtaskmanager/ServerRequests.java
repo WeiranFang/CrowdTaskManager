@@ -25,7 +25,7 @@ import java.util.Map;
 public class ServerRequests {
     ProgressDialog progressDialog;
     public static final int CONNECTION_TIMEOUT = 1000 * 15, READ_TIMEOUT = 1000 * 15;
-    public static final String SERVER_ADDRESS = "http://192.168.1.221/crowd/db/";
+    public static final String SERVER_ADDRESS = "http://10.0.0.170/crowd/db/";
 
     public ServerRequests(Context context) {
         progressDialog = new ProgressDialog(context);
@@ -162,7 +162,8 @@ public class ServerRequests {
                     String email = jsonObject.getString("email");
                     int age = jsonObject.getInt("age");
                     int userId = jsonObject.getInt("userId");
-                    returnedUser = new User(userId, user.username, user.password, email, age);
+                    String createTime = jsonObject.getString("createTime");
+                    returnedUser = new User(userId, user.username, user.password, email, age, createTime);
                 }
 
             } catch (Exception e) {
@@ -312,13 +313,13 @@ public class ServerRequests {
             dataToSend.put("creatorId", task.creatorId + "");
             dataToSend.put("category", task.category);
             dataToSend.put("deadline", task.deadline);
-//            dataToSend.put("location", task.location);
             dataToSend.put("duration", task.duration + "");
             dataToSend.put("award", task.award + "");
             dataToSend.put("participants", task.participants + "");
             dataToSend.put("status", task.status);
             dataToSend.put("geoLat", task.geoLat + "");
             dataToSend.put("geoLong", task.geoLong + "");
+            dataToSend.put("address", task.address);
         } else if (object instanceof User) {
             User user = (User) object;
             dataToSend.put("username", user.username);

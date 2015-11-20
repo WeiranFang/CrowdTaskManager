@@ -53,6 +53,7 @@ public class CreateTaskActivity extends AppCompatActivity
             new LatLng(-34.041458, 150.790100), new LatLng(-33.682247, 151.383362));
 
     private LatLng latLng;
+    private String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,20 +143,7 @@ public class CreateTaskActivity extends AppCompatActivity
             final Place place = places.get(0);
 
             latLng = place.getLatLng();
-
-            // Format details of the place for display and show it in a TextView.
-//            mPlaceDetailsText.setText(formatPlaceDetails(getResources(), place.getName(),
-//                    place.getId(), place.getAddress(), place.getPhoneNumber(),
-//                    place.getWebsiteUri()));
-
-            // Display the third party attributions if set.
-//            final CharSequence thirdPartyAttribution = places.getAttributions();
-//            if (thirdPartyAttribution == null) {
-//                mPlaceDetailsAttribution.setVisibility(View.GONE);
-//            } else {
-//                mPlaceDetailsAttribution.setVisibility(View.VISIBLE);
-//                mPlaceDetailsAttribution.setText(Html.fromHtml(thirdPartyAttribution.toString()));
-//            }
+            address = place.getAddress().toString();
 
             Log.i(TAG, "Place details received: " + place.getName());
 
@@ -247,7 +235,7 @@ public class CreateTaskActivity extends AppCompatActivity
         User currentUser = userLocalStore.getLoggedInUser();
         int creatorId = currentUser.userId;
 //        Task newTask = new Task(award, participants, creatorId, duration, title, content, category, deadLine);
-        Task newTask = new Task(award, participants, creatorId, duration, title, content, category, deadLine, latLng.latitude, latLng.longitude);
+        Task newTask = new Task(award, participants, creatorId, duration, title, content, category, deadLine, latLng.latitude, latLng.longitude, address);
         uploadTask(newTask);
 
     }

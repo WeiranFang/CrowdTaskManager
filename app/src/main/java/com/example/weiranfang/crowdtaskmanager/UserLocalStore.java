@@ -2,6 +2,7 @@ package com.example.weiranfang.crowdtaskmanager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 
 /**
  * Created by weiranfang on 10/25/15.
@@ -21,6 +22,7 @@ public class UserLocalStore {
         spEditor.putInt("age", user.age);
         spEditor.putString("email", user.email);
         spEditor.putInt("userId", user.userId);
+        spEditor.putString("createTime", user.createTime);
         spEditor.commit();
     }
 
@@ -30,7 +32,8 @@ public class UserLocalStore {
         int userId = userLocalDatabase.getInt("userId", -1);
         String password = userLocalDatabase.getString("password", "");
         String email = userLocalDatabase.getString("email", "");
-        User storedUser = new User(userId, username, password, email, age);
+        String createTime = userLocalDatabase.getString("createTime", "");
+        User storedUser = new User(userId, username, password, email, age, createTime);
         return storedUser;
     }
 
@@ -38,6 +41,21 @@ public class UserLocalStore {
         SharedPreferences.Editor spEditor = userLocalDatabase.edit();
         spEditor.putBoolean("loggedIn", loggedIn);
         spEditor.commit();
+    }
+
+    public void setCurrentLocation(Location location) {
+        SharedPreferences.Editor spEditor = userLocalDatabase.edit();
+        spEditor.putString("latitude", location.getLatitude() + "");
+        spEditor.putString("longitude", location.getLongitude() + "");
+        spEditor.commit();
+    }
+
+    public double getCurrentLatitude(){
+        return Double.parseDouble(userLocalDatabase.getString("latitude", ""));
+    }
+
+    public double getCurrentLongitude() {
+        return Double.parseDouble(userLocalDatabase.getString("longitude", ""));
     }
 
     public void clearUserData() {

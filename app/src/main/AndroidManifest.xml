@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.weiranfang.crowdtaskmanager" >
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -9,10 +11,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA41xgB0Aw3PUocuV3OA5i2VtT2S2Nykus"/>
+            android:value="AIzaSyA41xgB0Aw3PUocuV3OA5i2VtT2S2Nykus" />
 
         <activity
             android:name=".MainActivity"
@@ -33,11 +34,13 @@
         </activity>
         <activity
             android:name=".TaskListActivity"
-            android:label="Task List">
+            android:label="Task List" >
         </activity>
         <activity
             android:name=".CreateTaskActivity"
-            android:label="Create New Task">
+            android:label="Create New Task" >
+        </activity>
+        <activity android:name=".TaskDetailActivity" >
         </activity>
     </application>
 

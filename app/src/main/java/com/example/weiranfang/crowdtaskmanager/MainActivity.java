@@ -1,9 +1,14 @@
 package com.example.weiranfang.crowdtaskmanager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,8 +17,12 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    UserLocalStore userLocalStore;
-    TextView helloTextView;
+    private UserLocalStore userLocalStore;
+    private TextView helloTextView;
+
+    private LocationManager locationManager;
+
+    private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +32,34 @@ public class MainActivity extends AppCompatActivity {
         userLocalStore = new UserLocalStore(this);
 
         helloTextView = (TextView) findViewById(R.id.helloTextView);
-//        emailTextView = (TextView) findViewById(R.id.emailTextView);
+
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                userLocalStore.setCurrentLocation(location);
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                Log.d("Latitude", "status");
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                Log.d("Latitude", "enable");
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Log.d("Latitude", "disable");
+            }
+        };
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -2,6 +2,7 @@ package com.example.weiranfang.crowdtaskmanager;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +15,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by weiranfang on 11/16/15.
  */
 public class TaskListAdapter extends BaseAdapter {
     private Activity activity;
-    private JSONArray jsonArray;
+    private ArrayList<Task> taskList;
     private static LayoutInflater inflater = null;
 
-    public TaskListAdapter(Activity activity, JSONArray jsonArray) {
+//    public TaskListAdapter(Activity activity, JSONArray jsonArray) {
+//        this.activity = activity;
+//        this.jsonArray = jsonArray;
+//        inflater = (LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//    }
+
+    public TaskListAdapter(Activity activity, ArrayList<Task> taskList) {
         this.activity = activity;
-        this.jsonArray = jsonArray;
+        this.taskList = taskList;
         inflater = (LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -38,7 +47,7 @@ public class TaskListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return jsonArray.length();
+        return taskList.size();
     }
 
     @Override
@@ -68,20 +77,26 @@ public class TaskListAdapter extends BaseAdapter {
             holder = (ViewHolder) vi.getTag();
         }
 
-        if (jsonArray.length() <= 0) {
+        if (taskList.size() <= 0) {
             holder.titleTextView.setText("No Data");
         } else {
-            JSONObject jsonObject = null;
-            try {
-                jsonObject = jsonArray.getJSONObject(position);
-                holder.titleTextView.setText(jsonObject.getString("title"));
-                holder.awardTextView.setText(jsonObject.getString("award"));
-                holder.createTimeTextView.setText(jsonObject.getString("createTime"));
+            Task task = taskList.get(position);
+            holder.titleTextView.setText(task.title);
+            holder.awardTextView.setText(task.award + "");
+            holder.createTimeTextView.setText(task.createTime);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            JSONObject jsonObject = null;
+//            try {
+//                jsonObject = jsonArray.getJSONObject(position);
+//                holder.titleTextView.setText(jsonObject.getString("title"));
+//                holder.awardTextView.setText(jsonObject.getString("award"));
+//                holder.createTimeTextView.setText(jsonObject.getString("createTime"));
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
         }
         return vi;
     }
+
 }
