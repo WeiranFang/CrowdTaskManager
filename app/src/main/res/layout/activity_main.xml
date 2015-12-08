@@ -5,23 +5,29 @@
     android:layout_width="match_parent"
     android:padding="30dp">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:id="@+id/helloTextView"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"/>
-
     <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:text="Welcome to TaskManager"-->
         <!--android:textSize="25dp"-->
-        <!--android:id="@+id/welcomeTextView"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_marginTop="10dp" />-->
+        <!--android:id="@+id/helloTextView"-->
+        <!--android:layout_gravity="center_horizontal" />-->
+    <!-- -->
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="refresh"
+        android:id="@+id/refreshButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:onClick="clickRefreshButton"
+        android:width="200dp"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -29,7 +35,7 @@
         android:text="task list"
         android:id="@+id/taskListButton"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="10dp"
         android:onClick="clickTaskListButton"
         android:width="200dp"/>
 

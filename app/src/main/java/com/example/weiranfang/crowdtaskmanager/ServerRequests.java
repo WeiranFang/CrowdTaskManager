@@ -26,6 +26,7 @@ public class ServerRequests {
     ProgressDialog progressDialog;
     public static final int CONNECTION_TIMEOUT = 1000 * 15, READ_TIMEOUT = 1000 * 15;
     public static final String SERVER_ADDRESS = "http://10.0.0.170/crowd/db/";
+//    public static final String SERVER_ADDRESS = "http://192.168.1.127/crowd/db/";
 
     public ServerRequests(Context context) {
         progressDialog = new ProgressDialog(context);

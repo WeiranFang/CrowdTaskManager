@@ -60,6 +60,16 @@
         android:layout_height="wrap_content"
         android:onClick="register"/>
 
+    <TextView
+        android:id="@+id/registerLinkTextView"
+        android:layout_marginTop="10dp"
+        android:text="@string/back_to_login"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true"
+        android:onClick="navigateToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>
 
 

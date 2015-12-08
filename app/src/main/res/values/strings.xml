@@ -8,6 +8,8 @@
     <string name="title_activity_logout">Logout</string>
     <string name="action_logout">Logout</string>
     <string name="locationHint">Enter your task location</string>
+    <string name="create_account_line">No account yet? Create one</string>
+    <string name="back_to_login">Already a member? Login</string>
 
     <string-array name="category_array">
         <item>select</item>
@@ -28,5 +30,12 @@
         <item>more than 1 month</item>
         <item>more than 6 months</item>
         <item>more than 1 year</item>
+    </string-array>
+
+    <string-array name="sort_methods_array">
+        <item>sort by time</item>
+        <item>sort by location</item>
+        <item>sort by duration</item>
+        <item>sort by award</item>
     </string-array>
 </resources>

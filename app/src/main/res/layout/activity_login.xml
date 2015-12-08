@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:padding="30dp">
 
+    <ImageView
+        android:id="@+id/loginImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/crowdsourcing"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,12 +39,11 @@
         android:text="Login"
         android:onClick="clickLoginButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"/>
-
+        android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/registerLinkTextView"
-        android:text="Register Here"
+        android:layout_marginTop="10dp"
+        android:text="@string/create_account_line"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:clickable="true"

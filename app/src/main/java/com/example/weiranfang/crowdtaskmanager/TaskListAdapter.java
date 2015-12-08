@@ -37,6 +37,10 @@ public class TaskListAdapter extends BaseAdapter {
         inflater = (LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public void changeTaskList(ArrayList<Task> taskList) {
+        this.taskList = taskList;
+    }
+
     public static class ViewHolder{
 
         public TextView titleTextView;
