@@ -163,7 +163,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ACCEPT"
-            android:id="@+id/createButton"
+            android:id="@+id/acceptButton"
             android:layout_gravity="right"
             android:onClick="clickAcceptButton"/>
 

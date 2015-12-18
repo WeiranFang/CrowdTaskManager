@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.weiranfang.crowdtaskmanager" >
+    package="com.example.weiranfang.crowdtaskmanager">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -20,30 +20,28 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".TaskListActivity"
-            android:label="Task List">
-        </activity>
+            android:label="Task List" />
         <activity
             android:name=".CreateTaskActivity"
             android:label="Create New Task"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".TaskDetailActivity" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TaskDetailActivity" />
+        <activity android:name=".UserPreferencesActivity" />
+        <activity android:name=".TaskOptionActivity"></activity>
     </application>
 
 </manifest>

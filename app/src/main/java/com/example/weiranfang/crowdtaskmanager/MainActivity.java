@@ -94,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void downloadTasks() {
         User currentUser = userLocalStore.getLoggedInUser();
-
+        LatLng currentLatLng = new LatLng(userLocalStore.getCurrentLatitude(), userLocalStore.getCurrentLongitude());
         // Download task data
         ServerRequests serverRequests = new ServerRequests(this);
-        serverRequests.fetchTaskDataInBackground(currentUser, new GetJsonCallBack() {
+        serverRequests.fetchTaskDataInBackground(currentUser, currentLatLng, new GetJsonCallBack() {
             @Override
             public void done(JSONArray fetchedJsonArray) {
                 if (fetchedJsonArray == null || fetchedJsonArray.length() == 0) {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpMap(ArrayList<Task> tasks) {
         LatLng currentLatLng = new LatLng(userLocalStore.getCurrentLatitude(), userLocalStore.getCurrentLongitude());
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10f));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 6f));
 
         // Map each marker to a task
         latLngTaskMap.clear();
@@ -190,8 +190,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_user_tasks) {
+            startActivity(new Intent(MainActivity.this, TaskOptionActivity.class));
+        }
+        if (id == R.id.action_preferences) {
+            startActivity(new Intent(MainActivity.this, UserPreferencesActivity.class));
         }
         if (id == R.id.action_logout) {
             logout();
@@ -227,7 +230,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickTaskListButton(View view) {
-        startActivity(new Intent(this, TaskListActivity.class));
+        Intent intent = new Intent(this, TaskListActivity.class);
+        intent.putExtra("TaskType", "ALL");
+        startActivity(intent);
     }
 
     public void clickCreateTaskButton(View view) {

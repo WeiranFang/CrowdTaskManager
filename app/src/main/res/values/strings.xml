@@ -32,6 +32,15 @@
         <item>more than 1 year</item>
     </string-array>
 
+    <string-array name="max_duration_array">
+        <item>1 day</item>
+        <item>1 week</item>
+        <item>1 month</item>
+        <item>6 month</item>
+        <item>1 year</item>
+        <item>not specified</item>
+    </string-array>
+
     <string-array name="sort_methods_array">
         <item>sort by time</item>
         <item>sort by location</item>

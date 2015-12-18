@@ -10,14 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 
 public class TaskListActivity extends AppCompatActivity {
     public static final float METERS_NEARBY = 20000;
@@ -30,7 +25,9 @@ public class TaskListActivity extends AppCompatActivity {
 
     Spinner sortTaskSpinner;
 
-    ArrayList<Task> allTasks;
+    ArrayList<Task> taskList;
+
+    String taskType = "ALL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +38,28 @@ public class TaskListActivity extends AppCompatActivity {
         sortTaskSpinner = (Spinner) findViewById(R.id.sortTaskSpinner);
 
         userLocalStore = new UserLocalStore(this);
-        allTasks = DataHolder.getInstance().getTasks();
 
-        TaskListAdapter adapter = new TaskListAdapter(this, allTasks);
+        Intent intent = getIntent();
+        Bundle bd = intent.getExtras();
+        if(bd != null)
+        {
+            taskType = (String) bd.get("TaskType");
+            if (taskType.equals("ALL")) taskList = DataHolder.getInstance().getTasks();
+            else if (taskType.equals("ACCEPTED")) taskList = DataHolder.getInstance().getUserAcceptedTasks();
+            else if (taskType.equals("CREATED")) taskList = DataHolder.getInstance().getUserCreatedTasks();
+        } else {
+            taskList = DataHolder.getInstance().getTasks();
+        }
+
+        TaskListAdapter adapter = new TaskListAdapter(this, taskList);
         taskListView.setAdapter(adapter);
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
-                intent.putExtra("task", allTasks.get(position));
+                intent.putExtra("task", taskList.get(position));
+                String buttonType = taskType.equals("ALL") ? "ON" : "OFF";
+                intent.putExtra("ButtonType", buttonType);
                 startActivity(intent);
             }
         });
@@ -84,7 +94,7 @@ public class TaskListActivity extends AppCompatActivity {
     }
 
     private void showTasksByTime() {
-        Collections.sort(allTasks, new Comparator<Task>() {
+        Collections.sort(taskList, new Comparator<Task>() {
             @Override
             public int compare(Task task1, Task task2) {
                 return task2.createTime.compareTo(task1.createTime);
@@ -92,12 +102,12 @@ public class TaskListActivity extends AppCompatActivity {
         });
 
         TaskListAdapter adapter = (TaskListAdapter) taskListView.getAdapter();
-        adapter.changeTaskList(allTasks);
+        adapter.changeTaskList(taskList);
         adapter.notifyDataSetChanged();
     }
 
     private void showTasksByLocation() {
-        Collections.sort(allTasks, new Comparator<Task>() {
+        Collections.sort(taskList, new Comparator<Task>() {
             @Override
             public int compare(Task task1, Task task2) {
                 float[] dist1 = new float[1];
@@ -113,27 +123,15 @@ public class TaskListActivity extends AppCompatActivity {
         });
 
         TaskListAdapter adapter = (TaskListAdapter) taskListView.getAdapter();
-        adapter.changeTaskList(allTasks);
+        adapter.changeTaskList(taskList);
         adapter.notifyDataSetChanged();
-//        final ArrayList<Task> tasks = tempTasks;
-//
-//        adapter = new TaskListAdapter(this, tasks);
-//        taskListView.setAdapter(adapter);
-//
-//        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
-//                intent.putExtra("task", tasks.get(position));
-//                startActivity(intent);
-//            }
-//        });
+
     }
 
     private void showTasksByAward() {
 //        ArrayList<Task> tempTasks = DataHolder.getInstance().getTasks();
 
-        Collections.sort(allTasks, new Comparator<Task>() {
+        Collections.sort(taskList, new Comparator<Task>() {
             @Override
             public int compare(Task task1, Task task2) {
                 return task2.award - task1.award;
@@ -141,125 +139,26 @@ public class TaskListActivity extends AppCompatActivity {
         });
 
         TaskListAdapter adapter = (TaskListAdapter) taskListView.getAdapter();
-        adapter.changeTaskList(allTasks);
+        adapter.changeTaskList(taskList);
         adapter.notifyDataSetChanged();
-//        final ArrayList<Task> tasks = tempTasks;
 
-//        adapter = new TaskListAdapter(this, tasks);
-//        taskListView.setAdapter(adapter);
-//
-//        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
-//                intent.putExtra("task", tasks.get(position));
-//                startActivity(intent);
-//            }
-//        });
     }
 
     private void showTasksByDuration() {
 //        ArrayList<Task> tempTasks = DataHolder.getInstance().getTasks();
 
-        Collections.sort(allTasks, new Comparator<Task>() {
+        Collections.sort(taskList, new Comparator<Task>() {
             @Override
             public int compare(Task task1, Task task2) {
                 return task1.duration - task2.duration;
             }
         });
         TaskListAdapter adapter = (TaskListAdapter) taskListView.getAdapter();
-        adapter.changeTaskList(allTasks);
+        adapter.changeTaskList(taskList);
         adapter.notifyDataSetChanged();
 
-//        final ArrayList<Task> tasks = tempTasks;
-//        adapter = new TaskListAdapter(this, tasks);
-//        taskListView.setAdapter(adapter);
-//
-//        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
-//                intent.putExtra("task", tasks.get(position));
-//                startActivity(intent);
-//            }
-//        });
     }
 
-//    private ArrayList<Task> getAllTaskList(JSONArray jsonArray) {
-//        ArrayList<Task> tasks = new ArrayList<Task>();
-//        try {
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                tasks.add(parseJsonToTask(jsonObject));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return tasks;
-//    }
-
-//    private ArrayList<Task> getNearbyTaskList(JSONArray jsonArray) {
-//        double currentLatitude = userLocalStore.getCurrentLatitude();
-//        double currentLongitude = userLocalStore.getCurrentLongitude();
-//        float[] distance = new float[1];
-//        ArrayList<Task> tasks = new ArrayList<Task>();
-//        try {
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                Task task = parseJsonToTask(jsonObject);
-//                Location.distanceBetween(currentLatitude, currentLongitude, task.geoLat, task.geoLong, distance);
-//                if (distance[0] <= METERS_NEARBY) {
-//                    tasks.add(task);
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return tasks;
-//    }
-
-//    private void displayNearbyTaskList(JSONArray fetchedJsonArray) {
-//
-//        final ArrayList<Task> tasks = getNearbyTaskList(fetchedJsonArray);
-//
-//        adapter = new TaskListAdapter(this, tasks);
-//        taskListView.setAdapter(adapter);
-//
-//        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
-//                intent.putExtra("task", tasks.get(position));
-//                startActivity(intent);
-//            }
-//        });
-//    }
-
-
-//    private Task parseJsonToTask(JSONObject jsonObject) {
-//        try {
-//            int taskId = jsonObject.getInt("taskId");
-//            String title = jsonObject.getString("title");
-//            String content = jsonObject.getString("content");
-//            String createTime = jsonObject.getString("createTime");
-//            int creatorId = jsonObject.getInt("creatorId");
-//            String category = jsonObject.getString("category");
-//            String deadline = jsonObject.getString("deadline");
-//            int duration = jsonObject.getInt("duration");
-//            int award = jsonObject.getInt("award");
-//            int participants = jsonObject.getInt("participants");
-//            String status = jsonObject.getString("status");
-//            double geoLat = jsonObject.getDouble("geoLat");
-//            double geoLong = jsonObject.getDouble("geoLong");
-//            String address = jsonObject.getString("address");
-//
-//            return new Task(taskId, title, content, createTime, creatorId, category,
-//                    deadline, duration, award, participants, status, geoLat, geoLong, address);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 
     private void showErrorMessage() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);

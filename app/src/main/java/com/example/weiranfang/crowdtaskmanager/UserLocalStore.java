@@ -51,11 +51,11 @@ public class UserLocalStore {
     }
 
     public double getCurrentLatitude(){
-        return Double.parseDouble(userLocalDatabase.getString("latitude", ""));
+        return Double.parseDouble(userLocalDatabase.getString("latitude", "40.52083759"));
     }
 
     public double getCurrentLongitude() {
-        return Double.parseDouble(userLocalDatabase.getString("longitude", ""));
+        return Double.parseDouble(userLocalDatabase.getString("longitude", "-74.4576809"));
     }
 
     public void clearUserData() {
