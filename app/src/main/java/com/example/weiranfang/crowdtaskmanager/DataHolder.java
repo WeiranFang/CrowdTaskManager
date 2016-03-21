@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 /**
  * Created by weiranfang on 11/29/15.
+ * A Singleton class used for saving local task data.
  */
 public class DataHolder {
-    private ArrayList<Task> allTasks;
+    private ArrayList<Task> allTasks; // All nearby tasks.
     private ArrayList<Task> userCreatedTasks;
     private ArrayList<Task> userAcceptedTasks;
 

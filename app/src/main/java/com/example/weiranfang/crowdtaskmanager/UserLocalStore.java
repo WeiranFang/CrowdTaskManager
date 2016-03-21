@@ -6,6 +6,7 @@ import android.location.Location;
 
 /**
  * Created by weiranfang on 10/25/15.
+ * UserLocalStore is used for saving local user sessions, so that user does not need to login every time.
  */
 public class UserLocalStore {
     public static final String SP_NAME = "userDetails";
@@ -15,6 +16,10 @@ public class UserLocalStore {
         userLocalDatabase = context.getSharedPreferences(SP_NAME, 0);
     }
 
+    /**
+     * Map user information.
+     * @param user User to save
+     */
     public void storeUserData(User user) {
         SharedPreferences.Editor spEditor = userLocalDatabase.edit();
         spEditor.putString("username", user.username);
@@ -26,6 +31,10 @@ public class UserLocalStore {
         spEditor.commit();
     }
 
+    /**
+     * Get the current user that was stored in shared preferences.
+     * @return the current user in local session
+     */
     public User getLoggedInUser() {
         String username = userLocalDatabase.getString("username", "");
         int age = userLocalDatabase.getInt("age", -1);
@@ -37,12 +46,20 @@ public class UserLocalStore {
         return storedUser;
     }
 
+    /**
+     * Set the login status of current user.
+     * @param loggedIn If the user has logged in or not
+     */
     public void setUserLoggedIn(boolean loggedIn) {
         SharedPreferences.Editor spEditor = userLocalDatabase.edit();
         spEditor.putBoolean("loggedIn", loggedIn);
         spEditor.commit();
     }
 
+    /**
+     * Store the current location of this user.
+     * @param location Current location retrieved from the device.
+     */
     public void setCurrentLocation(Location location) {
         SharedPreferences.Editor spEditor = userLocalDatabase.edit();
         spEditor.putString("latitude", location.getLatitude() + "");
@@ -50,14 +67,25 @@ public class UserLocalStore {
         spEditor.commit();
     }
 
+    /**
+     * Get latitude of current location.
+     * @return Latitude
+     */
     public double getCurrentLatitude(){
         return Double.parseDouble(userLocalDatabase.getString("latitude", "40.52083759"));
     }
 
+    /**
+     * Get longitude of current location.
+     * @return Longitude
+     */
     public double getCurrentLongitude() {
         return Double.parseDouble(userLocalDatabase.getString("longitude", "-74.4576809"));
     }
 
+    /**
+     * Clear all information in the session once user logs out.
+     */
     public void clearUserData() {
         SharedPreferences.Editor spEditor = userLocalDatabase.edit();
         spEditor.clear();

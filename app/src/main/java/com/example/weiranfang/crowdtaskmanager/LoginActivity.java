@@ -33,7 +33,10 @@ public class LoginActivity extends AppCompatActivity {
         userLocalStore = new UserLocalStore(this);
     }
 
-
+    /**
+     * Onclick method when user click on LoginButton.
+     * @param view
+     */
     public void clickLoginButton(View view) {
         String username = userNameEditTest.getText().toString();
         String password = passwordEditText.getText().toString();
@@ -43,6 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         authenticate(user);
     }
 
+    /**
+     * Make connection to the server to check the username passward pair of the user.
+     * @param user
+     */
     private void authenticate(User user) {
         ServerRequests serverRequests = new ServerRequests(this);
         serverRequests.fetchUserDataInBackground(user, new GetUserCallBack() {
@@ -57,6 +64,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Store the user info into local session.
+     * @param returnedUser
+     */
     private void logUserIn(User returnedUser) {
         userLocalStore.storeUserData(returnedUser);
         userLocalStore.setUserLoggedIn(true);

@@ -19,17 +19,12 @@ import java.util.ArrayList;
 
 /**
  * Created by weiranfang on 11/16/15.
+ * Adapter that handles the task preview showed on the task list activity.
  */
 public class TaskListAdapter extends BaseAdapter {
     private Activity activity;
     private ArrayList<Task> taskList;
     private static LayoutInflater inflater = null;
-
-//    public TaskListAdapter(Activity activity, JSONArray jsonArray) {
-//        this.activity = activity;
-//        this.jsonArray = jsonArray;
-//        inflater = (LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//    }
 
     public TaskListAdapter(Activity activity, ArrayList<Task> taskList) {
         this.activity = activity;
@@ -89,16 +84,6 @@ public class TaskListAdapter extends BaseAdapter {
             holder.awardTextView.setText(task.award + "");
             holder.createTimeTextView.setText(task.createTime);
 
-//            JSONObject jsonObject = null;
-//            try {
-//                jsonObject = jsonArray.getJSONObject(position);
-//                holder.titleTextView.setText(jsonObject.getString("title"));
-//                holder.awardTextView.setText(jsonObject.getString("award"));
-//                holder.createTimeTextView.setText(jsonObject.getString("createTime"));
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
         }
         return vi;
     }

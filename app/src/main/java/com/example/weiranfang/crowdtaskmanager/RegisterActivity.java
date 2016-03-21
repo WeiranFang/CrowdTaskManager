@@ -28,6 +28,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Onclick method once the user click on Register Button.
+     * @param view Current view
+     */
     public void register (View view) {
         String username = usernameEditText.getText().toString();
         String email = emailEditText.getText().toString();

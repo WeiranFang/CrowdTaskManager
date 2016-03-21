@@ -41,6 +41,9 @@ public class UserPreferencesActivity extends AppCompatActivity {
         showUserPreferences();
     }
 
+    /**
+     * Display the user preferences settings according to current database.
+     */
     private void showUserPreferences() {
         ServerRequests serverRequests = new ServerRequests(this);
         serverRequests.fetchPreferencesInBackground(currentUser, new GetPreferencesCallBack() {
@@ -57,7 +60,13 @@ public class UserPreferencesActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Onclick method once the user click on save button.
+     * All user settings will be updated in the preferences table in database.
+     * @param view Current view
+     */
     public void clickSaveButton(View view) {
+        // Check the validity of input data.
         int minAward;
         try {
             minAward = Integer.parseInt(minAwardEditText.getText().toString());

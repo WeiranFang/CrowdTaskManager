@@ -57,6 +57,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             acceptButton.setVisibility(View.GONE);
         }
 
+        //Set all task details.
         titleTextView.setText(task.title);
         categoryTextView.setText(task.category);
         durationTextView.setText(Task.durationArray[task.duration]);

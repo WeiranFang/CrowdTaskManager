@@ -25,6 +25,10 @@ public class TaskOptionActivity extends AppCompatActivity {
         downloadUserTasks();
     }
 
+    /**
+     * Make connection to the server to download both accepted tasks and created tasks from the
+     * tasks table in the database, and save these records in the DataHolder class.
+     */
     private void downloadUserTasks() {
         User currentUser = userLocalStore.getLoggedInUser();
 //        LatLng currentLatLng = new LatLng(userLocalStore.getCurrentLatitude(), userLocalStore.getCurrentLongitude());
@@ -55,6 +59,11 @@ public class TaskOptionActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Given jasonArray, parse it to a list of Task.
+     * @param jsonArray JSONArray to parse
+     * @return List of tasks
+     */
     private ArrayList<Task> getTaskList(JSONArray jsonArray) {
         ArrayList<Task> tasks = new ArrayList<Task>();
         try {
@@ -68,6 +77,11 @@ public class TaskOptionActivity extends AppCompatActivity {
         return tasks;
     }
 
+    /**
+     * Given jasonObject, parse it to a Task object.
+     * @param jsonObject JSONObject to parse
+     * @return Result task parsed by jsonobject
+     */
     private Task parseJsonToTask(JSONObject jsonObject) {
         try {
             int taskId = jsonObject.getInt("taskId");
@@ -93,6 +107,10 @@ public class TaskOptionActivity extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * Onclick method once the user click on the CreatedTask Button.
+     * @param view Current view
+     */
     public void clickCreatedTasksButton(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
         intent.putExtra("TaskType", "CREATED");
@@ -100,6 +118,10 @@ public class TaskOptionActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Onclick method once the user click on the AcceptedTask Button.
+     * @param view Current view
+     */
     public void clickAcceptedTasksButton(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
         intent.putExtra("TaskType", "ACCEPTED");

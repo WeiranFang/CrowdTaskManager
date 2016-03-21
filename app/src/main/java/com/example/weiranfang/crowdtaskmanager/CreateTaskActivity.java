@@ -72,6 +72,9 @@ public class CreateTaskActivity extends AppCompatActivity
         setDeadlineDialog();
         setAutoCompleteView();
 
+        /*
+        Set up the view for deadline.
+         */
         dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         deadlineEditText.setText(dateFormat.format(new Date()));
         deadlineEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -93,6 +96,9 @@ public class CreateTaskActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Initialize the auto complete view
+     */
     private void setAutoCompleteView() {
         locationAutocompleteAdapter = new LocationAutocompleteAdapter(this, googleApiClient, BOUNDS_GREATER_SYDNEY, null);
         locationAutoCompleteTextView.setAdapter(locationAutocompleteAdapter);
@@ -134,12 +140,16 @@ public class CreateTaskActivity extends AppCompatActivity
         @Override
         public void onResult(PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
-                // Request did not complete successfully
+                /*
+                Request did not complete successfully
+                 */
                 Log.e(TAG, "Place query did not complete. Error: " + places.getStatus().toString());
                 places.release();
                 return;
             }
-            // Get the Place object from the buffer.
+            /*
+            Get the Place object from the buffer.
+             */
             final Place place = places.get(0);
 
             latLng = place.getLatLng();
@@ -151,6 +161,9 @@ public class CreateTaskActivity extends AppCompatActivity
         }
     };
 
+    /**
+     * Set up deadline picker based on Calender.
+     */
     private void setDeadlineDialog() {
         Calendar newCalendar = Calendar.getInstance();
         deadlineDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -175,7 +188,14 @@ public class CreateTaskActivity extends AppCompatActivity
         locationAutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.locationAutoCompleteTextView);
     }
 
+    /**
+     * Onclick method once user click on the CreateTask Button.
+     * @param view Current view
+     */
     public void clickCreateButton(View view) {
+        /*
+        Check the validity for each input.
+         */
         String title = titleEditText.getText().toString().trim();
         if (title == null || title.equals("")) {
             showErrorMessage("Empty title!");
@@ -232,14 +252,20 @@ public class CreateTaskActivity extends AppCompatActivity
             return;
         }
 
+        /*
+        Create the new task object and upload it to the server.
+         */
         User currentUser = userLocalStore.getLoggedInUser();
         int creatorId = currentUser.userId;
-//        Task newTask = new Task(award, participants, creatorId, duration, title, content, category, deadLine);
         Task newTask = new Task(award, participants, creatorId, duration, title, content, category, deadLine, latLng.latitude, latLng.longitude, address);
         uploadTask(newTask);
 
     }
 
+    /**
+     * Make connection to the server and upload the newly created task.
+     * @param task new task
+     */
     private void uploadTask(Task task) {
         ServerRequests serverRequests = new ServerRequests(this);
         serverRequests.storeTaskInBackground(task, new GetTaskCallBack() {
