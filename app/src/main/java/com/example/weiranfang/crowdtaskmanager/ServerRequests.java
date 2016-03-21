@@ -27,8 +27,8 @@ import java.util.Map;
 public class ServerRequests {
     ProgressDialog progressDialog;
     public static final int CONNECTION_TIMEOUT = 1000 * 15, READ_TIMEOUT = 1000 * 15;
-//    public static final String SERVER_ADDRESS = "http://10.0.0.170/crowd/db/";
-    public static final String SERVER_ADDRESS = "http://192.168.1.127/crowd/db/";
+    public static final String SERVER_ADDRESS = "http://10.0.0.170/crowd/db/";
+//    public static final String SERVER_ADDRESS = "http://192.168.1.127/crowd/db/";
 
     public ServerRequests(Context context) {
         progressDialog = new ProgressDialog(context);
@@ -82,6 +82,11 @@ public class ServerRequests {
         new UpdateParticipationAsyncTask(user, task, callBack).execute();
     }
 
+    public void updateGcmRegIdInBackground(User user, String token, GetJsonCallBack callBack) {
+//        progressDialog.show();
+        System.out.println("inside updateGcmRegId");
+        new UpdateGcmRegIdAsyncTask(user, token, callBack).execute();
+    }
 
 
 //    public void bindUserTaskInBackground(User user, Task task) {
@@ -664,6 +669,62 @@ public class ServerRequests {
             super.onPostExecute(aVoid);
         }
     }
+
+    public class UpdateGcmRegIdAsyncTask extends AsyncTask<Void, Void, Void> {
+        User user;
+        GetJsonCallBack callBack;
+        String gcmRegId;
+
+        public UpdateGcmRegIdAsyncTask(User user, String gcmRegId, GetJsonCallBack callBack) {
+            this.user = user;
+            this.gcmRegId = gcmRegId;
+            this.callBack = callBack;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            HashMap<String, String> dataToSend = new HashMap<>();
+            dataToSend.put("userId", user.userId + "");
+            dataToSend.put("gcmRegId", gcmRegId);
+
+
+            URL url = null;
+            HttpURLConnection connection = null;
+            try {
+                url = new URL(SERVER_ADDRESS + "update_gcm_reg_id.php");
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setReadTimeout(READ_TIMEOUT);
+                connection.setConnectTimeout(CONNECTION_TIMEOUT);
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                connection.setDoInput(true);
+
+                OutputStream os = connection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(dataToSend));
+                writer.flush();
+                writer.close();
+                os.close();
+
+                connection.getResponseCode();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if(connection != null) {
+                    connection.disconnect();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            callBack.done(null);
+            super.onPostExecute(aVoid);
+        }
+    }
+
 
     private HashMap<String, String> wrapData(Object object) {
         HashMap<String, String> dataToSend = new HashMap<>();
